@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ScrollView;
 import android.widget.Switch;
+import video.zhuker.sancho.R;
 
 import java.util.Random;
 

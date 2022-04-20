@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -33,6 +34,7 @@ import dji.ux.widget.config.CameraConfigStorageWidget;
 import dji.ux.widget.config.CameraConfigWBWidget;
 import dji.ux.widget.controls.CameraControlsWidget;
 import dji.ux.widget.controls.LensControlWidget;
+import video.zhuker.sancho.R;
 
 /**
  * Activity that shows all the UI elements together
@@ -85,7 +87,7 @@ public class CompleteWidgetActivity extends Activity {
         deviceWidth = outPoint.x;
 
         mapWidget = (MapWidget) findViewById(R.id.map_widget);
-        mapWidget.initAMap(map -> map.setOnMapClickListener((DJIMap.OnMapClickListener) latLng -> onViewClick(mapWidget)));
+        mapWidget.initGoogleMap(map -> map.setOnMapClickListener((DJIMap.OnMapClickListener) latLng -> onViewClick(mapWidget)));
         mapWidget.onCreate(savedInstanceState);
 
         initCameraView();
@@ -94,6 +96,9 @@ public class CompleteWidgetActivity extends Activity {
         fpvWidget = findViewById(R.id.fpv_widget);
         fpvWidget.setOnClickListener(view -> onViewClick(fpvWidget));
         fpvOverlayWidget = findViewById(R.id.fpv_overlay_widget);
+        fpvOverlayWidget.setGridOverlayEnabled(true);
+        fpvOverlayWidget.setCurrentGridOverlayType(FPVOverlayWidget.GridOverlayType.PARALLEL_DIAGONAL);
+        Button sendGpsButton = findViewById(R.id.send_gps_button);
         primaryVideoView = findViewById(R.id.fpv_container);
         secondaryVideoView = findViewById(R.id.secondary_video_view);
         secondaryFPVWidget = findViewById(R.id.secondary_fpv_widget);

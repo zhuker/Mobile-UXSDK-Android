@@ -10,7 +10,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion '30.0.2'
     defaultConfig {
-        applicationId "com.dji.ux.sample"
+        applicationId "video.zhuker.sancho"
         minSdkVersion 23
         targetSdkVersion 30
         multiDexEnabled true

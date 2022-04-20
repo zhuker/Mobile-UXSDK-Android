@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import video.zhuker.sancho.R;
 
 import dji.ux.widget.FPVOverlayWidget;
 import dji.ux.widget.FPVWidget;

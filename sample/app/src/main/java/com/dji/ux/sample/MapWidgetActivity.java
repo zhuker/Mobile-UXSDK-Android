@@ -56,6 +56,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import dji.common.flightcontroller.flyzone.FlyZoneCategory;
 import dji.ux.widget.MapWidget;
+import video.zhuker.sancho.R;
 
 import static com.here.android.mpa.common.MapSettings.setIsolatedDiskCacheRootPath;
 
@@ -142,7 +143,7 @@ public class MapWidgetActivity extends Activity implements CompoundButton.OnChec
             }
         };
         Intent intent = getIntent();
-        mapProvider = intent.getIntExtra(MAP_PROVIDER, 0);
+        mapProvider = 1; //intent.getIntExtra(MAP_PROVIDER, 1);
         switch (mapProvider) {
             case 0:
                 boolean success = setIsolatedDiskCacheRootPath(
