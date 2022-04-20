@@ -34,6 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import dji.common.error.DJIError;
 import dji.common.error.DJISDKError;
 import dji.log.DJILog;
@@ -44,7 +45,9 @@ import dji.sdk.sdkmanager.DJISDKInitEvent;
 import dji.sdk.sdkmanager.DJISDKManager;
 import video.zhuker.sancho.R;
 
-/** Main activity that displays three choices to user */
+/**
+ * Main activity that displays three choices to user
+ */
 public class MainActivity extends Activity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
     private static final String TAG = "MainActivity";
     private static final String LAST_USED_BRIDGE_IP = "bridgeip";
@@ -62,21 +65,23 @@ public class MainActivity extends Activity implements View.OnClickListener, Popu
             } else {
 
                 Toast.makeText(getApplicationContext(),
-                               "SDK registration failed, check network and retry!" + error.getDescription(),
-                               Toast.LENGTH_LONG).show();
+                        "SDK registration failed, check network and retry!" + error.getDescription(),
+                        Toast.LENGTH_LONG).show();
             }
         }
+
         @Override
         public void onProductDisconnect() {
             Toast.makeText(getApplicationContext(),
-                           "product disconnect!",
-                           Toast.LENGTH_LONG).show();
+                    "product disconnect!",
+                    Toast.LENGTH_LONG).show();
         }
+
         @Override
         public void onProductConnect(BaseProduct product) {
             Toast.makeText(getApplicationContext(),
-                           "product connect!",
-                           Toast.LENGTH_LONG).show();
+                    "product connect!",
+                    Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -89,8 +94,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Popu
                                       BaseComponent oldComponent,
                                       BaseComponent newComponent) {
             Toast.makeText(getApplicationContext(),
-                           key.toString() + " changed",
-                           Toast.LENGTH_LONG).show();
+                    key.toString() + " changed",
+                    Toast.LENGTH_LONG).show();
 
         }
 
@@ -112,19 +117,20 @@ public class MainActivity extends Activity implements View.OnClickListener, Popu
     public static boolean isStarted() {
         return isAppStarted;
     }
-    private static final String[] REQUIRED_PERMISSION_LIST = new String[] {
-        Manifest.permission.VIBRATE, // Gimbal rotation
-        Manifest.permission.INTERNET, // API requests
-        Manifest.permission.ACCESS_WIFI_STATE, // WIFI connected products
-        Manifest.permission.ACCESS_COARSE_LOCATION, // Maps
-        Manifest.permission.ACCESS_NETWORK_STATE, // WIFI connected products
-        Manifest.permission.ACCESS_FINE_LOCATION, // Maps
-        Manifest.permission.CHANGE_WIFI_STATE, // Changing between WIFI and USB connection
-        Manifest.permission.WRITE_EXTERNAL_STORAGE, // Log files
-        Manifest.permission.BLUETOOTH, // Bluetooth connected products
-        Manifest.permission.BLUETOOTH_ADMIN, // Bluetooth connected products
-        Manifest.permission.READ_EXTERNAL_STORAGE, // Log files
-        Manifest.permission.RECORD_AUDIO // Speaker accessory
+
+    private static final String[] REQUIRED_PERMISSION_LIST = new String[]{
+            Manifest.permission.VIBRATE, // Gimbal rotation
+            Manifest.permission.INTERNET, // API requests
+            Manifest.permission.ACCESS_WIFI_STATE, // WIFI connected products
+            Manifest.permission.ACCESS_COARSE_LOCATION, // Maps
+            Manifest.permission.ACCESS_NETWORK_STATE, // WIFI connected products
+            Manifest.permission.ACCESS_FINE_LOCATION, // Maps
+            Manifest.permission.CHANGE_WIFI_STATE, // Changing between WIFI and USB connection
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, // Log files
+            Manifest.permission.BLUETOOTH, // Bluetooth connected products
+            Manifest.permission.BLUETOOTH_ADMIN, // Bluetooth connected products
+            Manifest.permission.READ_EXTERNAL_STORAGE, // Log files
+            Manifest.permission.RECORD_AUDIO // Speaker accessory
     };
     private static final int REQUEST_PERMISSION_CODE = 12345;
     private List<String> missingPermission = new ArrayList<>();
@@ -141,7 +147,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Popu
         TextView versionText = (TextView) findViewById(R.id.version);
         versionText.setText("Debug:" + GlobalConfig.DEBUG + ", " + getResources().getString(R.string.sdk_version, DJISDKManager.getInstance().getSDKVersion()));
         bridgeModeEditText = (EditText) findViewById(R.id.edittext_bridge_ip);
-        bridgeModeEditText.setText(PreferenceManager.getDefaultSharedPreferences(this).getString(LAST_USED_BRIDGE_IP,""));
+        bridgeModeEditText.setText(PreferenceManager.getDefaultSharedPreferences(this).getString(LAST_USED_BRIDGE_IP, ""));
         bridgeModeEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -207,8 +213,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Popu
             startSDKRegistration();
         } else {
             ActivityCompat.requestPermissions(this,
-                                              missingPermission.toArray(new String[missingPermission.size()]),
-                                              REQUEST_PERMISSION_CODE);
+                    missingPermission.toArray(new String[missingPermission.size()]),
+                    REQUEST_PERMISSION_CODE);
         }
     }
 
@@ -238,12 +244,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Popu
 
     private void startSDKRegistration() {
         if (isRegistrationInProgress.compareAndSet(false, true)) {
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    DJISDKManager.getInstance().registerApp(MainActivity.this, registrationCallback);
-                }
-            });
+            AsyncTask.execute(() -> DJISDKManager.getInstance().registerApp(MainActivity.this, registrationCallback));
         }
     }
 
@@ -322,8 +323,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Popu
 
         if (!TextUtils.isEmpty(bridgeIP)) {
             DJISDKManager.getInstance().enableBridgeModeWithBridgeAppIP(bridgeIP);
-            Toast.makeText(getApplicationContext(),"BridgeMode ON!\nIP: " + bridgeIP,Toast.LENGTH_SHORT).show();
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(LAST_USED_BRIDGE_IP,bridgeIP).apply();
+            Toast.makeText(getApplicationContext(), "BridgeMode ON!\nIP: " + bridgeIP, Toast.LENGTH_SHORT).show();
+            PreferenceManager.getDefaultSharedPreferences(this).edit().putString(LAST_USED_BRIDGE_IP, bridgeIP).apply();
         }
     }
 }
